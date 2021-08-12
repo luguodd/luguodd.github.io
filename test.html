@@ -1,29 +1,58 @@
-<cmt-box @func="loadComments"></cmt-box>
-
-<ul class="list-group">
-
-  <li class="list-group-item" v-for="item in list" :key="item.id">
-
-    <span class="badge">评论人： {{ item.user }}</span>
-
-    {{ item.content }}
-
-  </li>
-
-</ul>
-
-<div class="form-group">
-    <label>评论人：</label>
-    <input type="text" class="form-control" v-model="user">
-  </div>
-
-  <div class="form-group">
-    <label>评论内容：</label>
-    <textarea class="form-control" v-model="content"></textarea>
-  </div>
-
-  <div class="form-group">
-    <input type="button" value="发表评论" class="btn btn-primary" @click="postComment">
-  </div>
-
-</div>
+  <!DOCTYPE html>
+  <html lang="en">
+  
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <link rel="stylesheet" href="main.css">
+      <title>Question3</title>
+ </head>
+ 
+ <body>
+     <div class="container">
+         <div class="comment-send">
+             <form id="commentForm" method="GET" action="http://127.0.0.1:8888/comment">
+                 <span class="comment-avatar">
+                     <img src="avatar1.jpg" alt="avatar">
+                 </span>
+                 <textarea class="comment-send-input" name="comment" form="commentForm" cols="80" rows="5" placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。"></textarea>
+                 <input class="comment-send-button" type="submit" value="发表评论">
+             </form>
+         </div>
+         <div class="comment-list" id="commentList">
+             <div class="comment">
+                 <span class="comment-avatar">
+                     <img src="avatar1.jpg" alt="avatar">
+                 </span>
+                 <div class="comment-content">
+                     <p class="comment-content-name">EdmundDZhang</p>
+                     <p class="comment-content-article">惊了</p>
+                     <p class="comment-content-footer">
+                         <span class="comment-content-footer-id">#2</span>
+                         <span class="comment-content-footer-device">来自安卓客户端</span>
+                         <span class="comment-content-footer-timestamp">2018-01-20 14:05</span>
+                     </p>
+                 </div>
+                 <div class="cls"></div>
+             </div>
+             <div class="comment comment-bottom">
+                 <span class="comment-avatar">
+           <img src="avatar2.jpg" alt="avatar">
+         </span>
+                 <div class="comment-content">
+                     <p class="comment-content-name">bilibili英雄联盟赛事</p>
+                     <p class="comment-content-article">Hello World!</p>
+                     <p class="comment-content-footer">
+                         <span class="comment-content-footer-id">#1</span>
+                         <span class="comment-content-footer-device">来自安卓客户端</span>
+                         <span class="comment-content-footer-timestamp">2018-01-20 13:10</span>
+                     </p>
+                 </div>
+                 <div class="cls"></div>
+             </div>
+         </div>
+     </div>
+ </body>
+ 
+ </html>
