@@ -5,6 +5,6 @@
 [导航页](index.html)<br>
 [R18误导（](r18/)
 ## Games
-[BadTime-SansFight](sans/)<br>
-[合成大波波](pb/)
+[BadTime-SansFight](sans.html)<br>
+[合成大波波](pb.html)
 ### Tips:SykeB项目将合并在luguodd项目中
