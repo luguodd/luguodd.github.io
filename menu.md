@@ -4,6 +4,7 @@
 [稿件博物馆-Github主题](video-Github.html)<br>
 [导航页](index.html)<br>
 [R18误导（](r18/)
+['Luguodd'的贡献](README.html)
 ## Games
 [BadTime-SansFight](game/sans.html)<br>
 [合成大波波](game/pb.html)<br>
