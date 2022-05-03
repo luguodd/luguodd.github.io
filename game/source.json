@@ -31,6 +31,7 @@
             "appPackage": "https://dev.tencent.com/u/wallace_leung/p/AppHub/git/raw/master/Xero/GBox_v1.3.6_1122.ipa",
             "appDescription": "App的描述"
         },
+        {
             "appType": "SELF_SIGN",
             "appCateIndex": 1,
             "appUpdateTime": "2019-11-23T08:00:00+0800",
