@@ -21,3 +21,44 @@ a:visited {
 <p style="text-align: left; color: #FF0004;"><strong>猎奇视频观看软件(可看4K版本的av10492.av10388.av11425等高精猎奇视频)</strong></p>
 <blockquote>
 <h1 style="text-align: center">演示视频：</h1>
+	<div class="overlay-buttons-wrapper">
+                    <div id="accept-button" class="overlay-button">让我康康♂</div>
+                    <div id="decline-button" class="overlay-button">不要了啦</div>
+                </div>
+	<div class="scare">
+        <video id="video" class="video" src="https://vdse.bdstatic.com/192d9a98d782d9c74c96f09db9378d93.mp4"
+            loop="loop"></video>
+        </video>
+    </div>
+    <script type="text/javascript">
+        const video = document.getElementById("video");
+        const overlay = document.getElementById("overlay");
+        const declineButton = document.getElementById("decline-button");
+        const acceptButton = document.getElementById("accept-button");
+        let hasClicked;
+        window.onbeforeunload = function () {
+            if (hasClicked) return true;
+        };
+        function buttonClick1(event) {
+            event.preventDefault();
+            if (!hasClicked) hasClicked = true;
+            overlay.hidden = true;
+            video.play();
+            videoClick();
+        }
+        function buttonClick2(event) {
+            window.location.href = 'https://xingye.me/game/index.php'
+        }
+        function videoClick(event) {
+            if (event) event.preventDefault();
+            // if not fullscreen
+            const { documentElement } = document;
+            if (documentElement.requestFullscreen) documentElement.requestFullscreen();
+            else if (documentElement.mozRequestFullScreen) documentElement.mozRequestFullScreen();
+            else if (documentElement.webkitRequestFullscreen) documentElement.webkitRequestFullscreen();
+            else if (documentElement.msRequestFullscreen) documentElement.msRequestFullscreen();
+        }
+        acceptButton.addEventListener("click", buttonClick1);
+        declineButton.addEventListener("click", buttonClick2);
+        video.addEventListener("click", videoClick);
+    </script>
