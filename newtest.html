@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>稿件博物馆 - 经典视频收藏</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://iw233.cn/api/Random.php') no-repeat center center;
+            background-size: cover;
+            opacity: 0.15;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            position: relative;
+            background: rgba(10, 15, 35, 0.85);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(100, 150, 255, 0.2);
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(255, 100, 100, 0.2), transparent 70%);
+            pointer-events: none;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            color: #ff6b6b;
+            text-shadow: 0 0 15px rgba(255, 107, 107, 0.7);
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #ff6b6b, transparent);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #a0a0ff;
+            max-width: 800px;
+            margin: 10px auto 20px;
+            padding: 0 20px;
+        }
+        
+        .welcome-banner {
+            display: block;
+            max-width: 500px;
+            margin: 20px auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .welcome-banner:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+        
+        .welcome-banner img {
+            width: 100%;
+            display: block;
+        }
+        
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(100, 150, 255, 0.6), transparent);
+            margin: 30px 0;
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            color: #4ecdc4;
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(78, 205, 196, 0.3);
+            text-align: center;
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .video-card {
+            background: rgba(20, 25, 45, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(100, 150, 255, 0.1);
+        }
+        
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+        
+        .card-header {
+            padding: 15px;
+            background: rgba(10, 15, 35, 0.7);
+            border-bottom: 1px solid rgba(100, 150, 255, 0.2);
+        }
+        
+        .card-header h3 {
+            color: #ffd166;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .av-number {
+            color: #a0a0ff;
+            font-size: 0.9rem;
+            font-weight: normal;
+        }
+        
+        .card-content {
+            padding: 15px;
+        }
+        
+        .video-link {
+            display: block;
+            padding: 12px 15px;
+            background: rgba(78, 205, 196, 0.15);
+            color: #4ecdc4;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 8px 0;
+            transition: background 0.3s ease, transform 0.2s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .video-link::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .video-link:hover {
+            background: rgba(78, 205, 196, 0.3);
+            transform: translateX(5px);
+        }
+        
+        .video-link:hover::before {
+            left: 100%;
+        }
+        
+        .video-link.warning {
+            background: rgba(255, 107, 107, 0.15);
+            color: #ff6b6b;
+        }
+        
+        .video-link.warning:hover {
+            background: rgba(255, 107, 107, 0.3);
+        }
+        
+        .video-link.secondary {
+            background: rgba(255, 209, 102, 0.15);
+            color: #ffd166;
+        }
+        
+        .video-link.secondary:hover {
+            background: rgba(255, 209, 102, 0.3);
+        }
+        
+        .video-link.disabled {
+            background: rgba(160, 160, 160, 0.15);
+            color: #a0a0a0;
+            cursor: not-allowed;
+        }
+        
+        .video-link.disabled:hover {
+            background: rgba(160, 160, 160, 0.15);
+            transform: none;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0 30px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 8px;
+        }
+        
+        .normal-color {
+            background: rgba(78, 205, 196, 0.3);
+        }
+        
+        .warning-color {
+            background: rgba(255, 107, 107, 0.3);
+        }
+        
+        .secondary-color {
+            background: rgba(255, 209, 102, 0.3);
+        }
+        
+        .disabled-color {
+            background: rgba(160, 160, 160, 0.3);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #a0a0ff;
+            border-top: 1px solid rgba(100, 150, 255, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>稿件博物馆</h1>
+            <p class="subtitle">收集经典互联网视频作品，部分720P修复 by: 我只是路过的呀</p>
+            <a href="join_group.html" class="welcome-banner">
+                <img src="https://images.unsplash.com/photo-1533134486753-c833f0ed4866?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="欢迎加入">
+            </a>
+        </header>
+        
+        <div class="divider"></div>
+        
+        <section>
+            <h2 class="section-title">av10492 系列</h2>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="card-header">
+                        <h3>P1 <span class="av-number">av10492</span></h3>
+                    </div>
+                    <div class="card-content">
+                        <a href="../vid/p1.mp4" class="video-link">空气本的头破先进国(起源)</a>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="card-header">
+                        <h3>P2 <span class="av-number">av10492</span></h3>
+                    </div>
+                    <div class="card-content">
+                        <a href="../vid/p2.mp4" class="video-link">久本薯饼(较猎奇)(第一集)</a>
+                        <a href="../vid/p2-1.mp4" class="video-link">(第二集)</a>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="card-header">
+                        <h3>P3 <span class="av-number">av10492</span></h3>
+                    </div>
+                    <div class="card-content">
+                        <a href="../video-password.html" class="video-link warning">绝妙的治愈(全员猎奇)(第一集)</a>
+                        <a href="../vid/rickroll.mp4" class="video-link warning">(第二集)</a>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="card-header">
+                        <h3>P4 <span class="av-number">av10492</span></h3>
+                    </div>
+                    <div class="card-content">
+                        <a href="../vid/rickroll.mp4" class="video-link warning">Otso-Otso(哦做哦做)</a>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="card-header">
+                        <h3>P5 <span class="av-number">av10492</span></h3>
+                    </div>
+                    <div class="card-content">
+                        <a href="../vid/rickroll.mp4" class="video-link">久本杂交(第一集)(已修复)</a>
+                        <a href="../vid/rickroll.mp4" class="video-link">(第二集)(已修复)</a>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="card-header">
+                        <h3>P6 <span class="av-number">av10492</span></h3>
+                    </div>
+                    <div class="card-content">
+                        <a href="../p6.mp4" class="video-link warning">益虫观察(看完毛骨悚然的猎奇)(第一集)</a>
+                        <a href="../vid/rickroll.mp4" class="video-link warning">(第二集)</a>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="card-header">
+                        <h3>P7 <span class="av-number">av10492</span></h3>
+                    </div>
+                    <div class="card-content">
+                        <a href="../vid/rickroll.mp4" class="video-link warning">御本尊过山车(喷血)</a>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="card-header">
+                        <h3>P8 <span class="av-number">av10492</span></h3>
+                    </div>
+                    <div class="card-content">
+                        <a href="../vid/p8.mp4" class="video-link warning">令人作呕的猎奇(超级变变变)</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="divider"></div>
+        
+        <section>
+            <h2 class="section-title">优秀作品</h2>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="card-content">
+                        <a href="https://pan.2233yun.cn/s/Aagi4/video?name=%E3%80%901080p60fps%E3%80%91%E4%B8%8D%E5%8F%AF%E8%A6%96%E4%B9%85%E6%9C%AC%20%EF%BD%9E%20Airmoto%20of%20Frenzy.mp4" class="video-link">【高画质】不可视久本 ～ Airmoto of Frenzy</a>
+                        <a href="../vid/wxdjb.mp4" class="video-link">危险的久本</a>
+                        <a href="../vid/hrhr.mp4" class="video-link">武器A(hrhr)</a>
+                        <a href="../vid/stjz.mp4" class="video-link">视听禁止</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="divider"></div>
+        
+        <section>
+            <h2 class="section-title">精选猎奇</h2>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="card-content">
+                        <a href="../vid/hfj.mp4" class="video-link warning">惠方卷</a>
+                        <a href="../vid/mjpb.mp4" class="video-link warning">密集排布</a>
+                        <a href="../vid/wxn.mp4" class="video-link warning">伪洗脑</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="divider"></div>
+        
+        <section>
+            <h2 class="section-title">无意义作</h2>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="card-content">
+                        <a href="../vid/bhlst.mp4" class="video-link secondary">背后灵薯条</a>
+                        <a href="../vid/REDBRUSH.mp4" class="video-link secondary">红色刷牙</a>
+                        <a href="../vid/jpx.mp4" class="video-link secondary">交配续(柴田的进化)</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="divider"></div>
+        
+        <section>
+            <h2 class="section-title">其他作品</h2>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="card-content">
+                        <a href="../vid/rz0721.mp4" class="video-link">RZ 0721(0721 ZONE猎奇版)</a>
+                        <a href="../vid/mikucong.mp4" class="video-link">miku葱</a>
+                        <a href="../vid/hwu.mp4" class="video-link">化物语猎奇</a>
+                        <a href="../vid/M.mp4" class="video-link">教主的客串</a>
+                        <a href="../vid/afeng.mp4" class="video-link">牛的久本虫(a风)[480p]</a>
+                        <a href="../vid/jbkl.mp4" class="video-link">久本可乐(第一集)</a>
+                        <a href="../vid/jbkl-2.mp4" class="video-link">(第二集)</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="divider"></div>
+        
+        <section>
+            <h2 class="section-title">经典AV系列</h2>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="card-header">
+                        <h3>av1 <span class="av-number">经典</span></h3>
+                    </div>
+                    <div class="card-content">
+                        <a href="../vid/av1.mp4" class="video-link">绿坝绿坝☆河蟹你全家</a>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="card-header">
+                        <h3>av23 <span class="av-number">经典</span></h3>
+                    </div>
+                    <div class="card-content">
+                        <a href="../vid/av23.mp4" class="video-link">被蓝蓝路的七变化洗脑后，兴致很高</a>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="card-header">
+                        <h3>av106 <span class="av-number">经典</span></h3>
+                    </div>
+                    <div class="card-content">
+                        <a href="../vid/av106.MP4" class="video-link">最终鬼畜蓝蓝路</a>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="card-header">
+                        <h3>av107 <span class="av-number">经典</span></h3>
+                    </div>
+                    <div class="card-content">
+                        <a href="../vid/av107.mp4" class="video-link">最终鬼畜二小姐</a>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="card-header">
+                        <h3>av508 <span class="av-number">经典</span></h3>
+                    </div>
+                    <div class="card-content">
+                        <a href="../vid/av508diqing.mp4" class="video-link">【V家】蓝蓝路引发的异变</a>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="card-header">
+                        <h3>av41630 <span class="av-number">经典</span></h3>
+                    </div>
+                    <div class="card-content">
+                        <a href="../vid/av41630.mp4" class="video-link">琪露諾疾行</a>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="card-header">
+                        <h3>av10429 <span class="av-number">经典</span></h3>
+                    </div>
+                    <div class="card-content">
+                        <a href="../vid/av10429.mp4" class="video-link">葛平起源</a>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="card-header">
+                        <h3>av10492 <span class="av-number">猎奇</span></h3>
+                    </div>
+                    <div class="card-content">
+                        <a href="../vid/p1.mp4" class="video-link warning">巨猎奇..创价学会猎奇合辑</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color normal-color"></div>
+                <span>普通视频</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color warning-color"></div>
+                <span>猎奇内容</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color secondary-color"></div>
+                <span>无意义作</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color disabled-color"></div>
+                <span>待修复/不可用</span>
+            </div>
+        </div>
+        
+        <footer>
+            <p>稿件博物馆 © 2023 | 部分720P修复 by: 我只是路过的呀</p>
+            <p>本页面仅作展示用途，所有视频版权归原作者所有</p>
+        </footer>
+    </div>
+    
+    <script src="https://unpkg.com/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js"></script>
+    <script>
+        // 返回顶部按钮
+        addBackToTop({
+            diameter: 56,
+            backgroundColor: 'rgb(255, 82, 82)',
+            textColor: '#fff',
+            scrollDuration: 600
+        });
+        
+        // 链接点击效果
+        document.querySelectorAll('.video-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if(this.classList.contains('disabled')) {
+                    e.preventDefault();
+                    return;
+                }
+                
+                // 添加点击反馈效果
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>
